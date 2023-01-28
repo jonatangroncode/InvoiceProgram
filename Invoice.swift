@@ -9,10 +9,21 @@ import Foundation
 
 import FirebaseFirestoreSwift
 struct Invoice : Codable, Identifiable {
-    
-    
-    var id = String()
+    var id = UUID()
     var name : String
-    var catergory : String = " "
-    var done : Bool = false
+    var companyName : String
+    var organizationNumber : Int = 0
+    var invoiceNummer : Int = 0
+    var CompanyAdres : String
+    var date : Date
+    var vat : Int = 0
+    var amount: Double
+    //var total : Double {
+      //  return amount * 1.25
+    //}
+    
+    
+
+    
 }
+
