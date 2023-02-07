@@ -8,22 +8,23 @@
 import Foundation
 
 import FirebaseFirestoreSwift
-struct Invoice : Codable, Identifiable {
-    var id = UUID()
-    var name : String
-    var companyName : String
-    var organizationNumber : Int = 0
-    var invoiceNummer : Int = 0
-    var CompanyAdres : String
-    var date : Date
-    var vat : Int = 0
-    var amount: Double
-    //var total : Double {
-      //  return amount * 1.25
-    //}
-    
-    
 
+struct Invoice : Codable, Identifiable  {
+    @DocumentID   var id : String?
+    var name : String
+    var company : Company
+    var client : Client
+    var user : User
+    var invoiceNummer : Int
+    var CompanyAdres : String?
+    var date : Date = Date()
+    var vat : Int = 0
+    var amount: Double?
+ //   var total : Double {
+        //return amount? * 1.25
+    }
     
-}
+    
+    
+//}
 
