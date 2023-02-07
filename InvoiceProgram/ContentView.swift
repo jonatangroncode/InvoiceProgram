@@ -22,9 +22,16 @@ struct ContentView: View {
     //@State var dateString = ""
     
     var body: some View {
+        if userIslogggedIn {
+            // go somewhere
+        }else{
+            content
+        }
+    }
+        var content: some View {
+        
         NavigationView{
-            
-            ZStack{
+        ZStack{
                 Color.black
                 RoundedRectangle(cornerRadius: 30, style: .continuous)
                     .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -136,9 +143,8 @@ struct ContentView: View {
                 .ignoresSafeArea()
             }
             
-      
-            
         }
+    
     func login(){
         Auth.auth().signIn(withEmail: email, password: password){ result, error in
             if error != nil {
