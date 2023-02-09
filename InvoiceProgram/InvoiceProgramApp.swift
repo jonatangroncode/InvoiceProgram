@@ -11,7 +11,7 @@ import FirebaseAuth
 @main
 
 struct InvoiceProgramApp: App {
-
+//@StateObject var newInvoice = NewInvoice()
     init(){
        
         FirebaseApp.configure()

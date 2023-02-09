@@ -19,12 +19,12 @@ struct Invoice : Codable, Identifiable  {
     var CompanyAdres : String?
     var date : Date = Date()
     var vat : Int = 0
-    var amount: Double?
- //   var total : Double {
-        //return amount? * 1.25
+    var amount: Double = 10000.00
+  var total : Double {
+        return amount * 1.25
     }
     
     
     
-//}
+}
 

@@ -19,6 +19,9 @@
 		BF2026F8297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2026F7297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift */; };
 		BF20272229782A140019A12B /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20272129782A140019A12B /* Invoice.swift */; };
 		BF20272A29783A300019A12B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF20272929783A300019A12B /* GoogleService-Info.plist */; };
+		BF9596A4299449F300E48802 /* InvoiceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A3299449F300E48802 /* InvoiceListView.swift */; };
+		BF9596A62994A2E900E48802 /* NewInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A52994A2E900E48802 /* NewInvoice.swift */; };
+		BF9596A82994ABFB00E48802 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A72994ABFB00E48802 /* ListView.swift */; };
 		BFB10FEF298A59AE00F33913 /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB10FEE298A59AE00F33913 /* LoginUser.swift */; };
 		BFB88326298B9FD700400683 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BFB88325298B9FD700400683 /* FirebaseAuth */; };
 		BFB88328298B9FD700400683 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = BFB88327298B9FD700400683 /* FirebaseDatabase */; };
@@ -60,6 +63,9 @@
 		BF2026F7297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProgramUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BF20272129782A140019A12B /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
 		BF20272929783A300019A12B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BF9596A3299449F300E48802 /* InvoiceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceListView.swift; sourceTree = "<group>"; };
+		BF9596A52994A2E900E48802 /* NewInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInvoice.swift; sourceTree = "<group>"; };
+		BF9596A72994ABFB00E48802 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		BFB10FEE298A59AE00F33913 /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				BFB10FEE298A59AE00F33913 /* LoginUser.swift */,
+				BF9596A52994A2E900E48802 /* NewInvoice.swift */,
 				BF20272129782A140019A12B /* Invoice.swift */,
+				BF9596A72994ABFB00E48802 /* ListView.swift */,
 				BF0E1292298927D9009245A5 /* Client.swift */,
 				BF0E129429892A9C009245A5 /* User.swift */,
 				BF0E12902989218C009245A5 /* Company.swift */,
@@ -123,6 +131,7 @@
 			children = (
 				BF2026DA297824FA0019A12B /* InvoiceProgramApp.swift */,
 				BF2026DC297824FA0019A12B /* ContentView.swift */,
+				BF9596A3299449F300E48802 /* InvoiceListView.swift */,
 				BF2026DE297825000019A12B /* Assets.xcassets */,
 				BF20272929783A300019A12B /* GoogleService-Info.plist */,
 				BF2026E0297825000019A12B /* Preview Content */,
@@ -297,9 +306,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFB10FEF298A59AE00F33913 /* LoginUser.swift in Sources */,
+				BF9596A62994A2E900E48802 /* NewInvoice.swift in Sources */,
+				BF9596A82994ABFB00E48802 /* ListView.swift in Sources */,
 				BF2026DD297824FA0019A12B /* ContentView.swift in Sources */,
 				BF20272229782A140019A12B /* Invoice.swift in Sources */,
 				BF0E129529892A9C009245A5 /* User.swift in Sources */,
+				BF9596A4299449F300E48802 /* InvoiceListView.swift in Sources */,
 				BF2026DB297824FA0019A12B /* InvoiceProgramApp.swift in Sources */,
 				BF0E1293298927D9009245A5 /* Client.swift in Sources */,
 				BF0E12912989218C009245A5 /* Company.swift in Sources */,
