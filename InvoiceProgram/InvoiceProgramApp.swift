@@ -11,8 +11,8 @@ import FirebaseAuth
 @main
 
 struct InvoiceProgramApp: App {
-//@StateObject var newInvoice = NewInvoice()
-    init(){
+    @UIApplicationDelegateAdaptor(AppDelagate.self) var appDelegate 
+  /*  init(){
        
         FirebaseApp.configure()
         //Auth.auth().createUser(withEmail: Email, password: "" ) { authResult, error in
@@ -21,11 +21,19 @@ struct InvoiceProgramApp: App {
 
     //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
       
-  //  }
+  //  }*/
    
     var body: some Scene {
         WindowGroup {
+            let viewloginUser = LoginUser()
             ContentView()
+                .environmentObject(viewloginUser)
         }
+    }
+}
+class AppDelagate:NSObject ,UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
     }
 }

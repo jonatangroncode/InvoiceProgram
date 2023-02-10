@@ -12,15 +12,15 @@ import FirebaseFirestoreSwift
 struct Invoice : Codable, Identifiable  {
     @DocumentID   var id : String?
     var name : String
-    var company : Company
+    var company : Company 
     var client : Client
     var user : User
     var invoiceNummer : Int
     var CompanyAdres : String?
-    var date : Date = Date()
     var vat : Int = 0
+    var date : String
     var amount: Double = 10000.00
-  var total : Double {
+    var total : Double {
         return amount * 1.25
     }
     
