@@ -25,9 +25,9 @@ struct InvoiceProgramApp: App {
    
     var body: some Scene {
         WindowGroup {
-            let viewloginUser = LoginUser()
+            let viewLoginUser = LoginUser()
             ContentView()
-                .environmentObject(viewloginUser)
+                .environmentObject(viewLoginUser)
         }
     }
 }
