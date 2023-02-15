@@ -13,12 +13,12 @@ import FirebaseFirestoreSwift
 struct User : Codable,Identifiable {
     
     @DocumentID   var id : String?
-    var name : String?
-    var surname : String?
-    var personalId :Int?
-    var address : String?
-    var profession : String?
-    var email : String?
+    var name : String
+    var surname : String
+    var personalId :Int
+    var address : String
+    var profession : String
+    var email : String
     var invoices: [Invoice] = []
    
     
