@@ -8,9 +8,10 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
-@main
 
-struct InvoiceProgramApp: App {
+@main
+struct InvoiceProgramApp: App{
+        
     @UIApplicationDelegateAdaptor(AppDelagate.self) var appDelegate 
   /*  init(){
        
@@ -26,8 +27,9 @@ struct InvoiceProgramApp: App {
     var body: some Scene {
         WindowGroup {
             let viewLoginUser = LoginUser()
-            ContentView()
+            ContentView(user: User())
                 .environmentObject(viewLoginUser)
+            
         }
     }
 }

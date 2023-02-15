@@ -8,3 +8,54 @@
 import SwiftUI
 import Firebase
 
+class LoginUser: ObservableObject {
+    @Published var user: User?
+    let auth = Auth.auth()
+    @Published var signedIn = false
+    var isSignedIn: Bool {
+        return auth.currentUser != nil
+    }
+    func signIn(email: String, password: String){
+      
+        auth.signIn(withEmail: email, password: password){[weak self]result, error in
+            guard result != nil, error == nil else{
+                return
+            }// Success
+            DispatchQueue.main.async {
+                var currUser: User
+                self?.signedIn = true
+                var fbm = FirebaseManager()
+                var userListFirestore =   fbm.listenToFirestore()
+                
+                for user in userListFirestore {
+                    if(user.email == email){
+                    currUser = user
+                    }
+                }
+                    
+                
+
+
+            }
+        }
+    }
+    func signUp(email: String, password: String){
+        auth.createUser(withEmail: email, password: password){[weak self] result, error in
+            guard result != nil, error == nil else{
+                return
+                
+            } // Success
+            DispatchQueue.main.async {
+                self?.signedIn = true
+                
+                var fbm = FirebaseManager()
+                fbm.saveToFirestore(user: User(name: "ec", surname: "ca", personalId: 8, profession: "bra", email: email))
+            }
+        }
+        
+    } // signout func
+    func signOut() {
+        try? auth.signOut()
+        self.signedIn = false
+    }
+}
