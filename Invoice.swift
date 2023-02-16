@@ -11,11 +11,11 @@ import FirebaseFirestoreSwift
 
 struct Invoice : Codable, Identifiable  {
     @DocumentID   var id : String?
-    var name : String
-    var company : Company 
-    var client : Client
+    var name : String = ""
+    var company : Company?
+    var client : Client?
     var user : User
-    var invoiceNummer : Int
+    var invoiceNummer : Int = 0
     var CompanyAdres : String?
     var vat : Int = 0
     var date : String

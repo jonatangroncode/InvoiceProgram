@@ -11,12 +11,12 @@ import Foundation
 import FirebaseFirestoreSwift
 struct Client : Codable,Identifiable  {
     @DocumentID  var id : String?
-    var name : String
-    var organizationNumber : Int = 0
+    var name : String?
+    var organizationNumber : String?
     var CompanyAdres : String?
-    var vat : Int = 0
-    var personalId :Int? = nil
-    
+    var vat : String?
+    var personalId :Int?
+    var referens : String?
     }
     
     
