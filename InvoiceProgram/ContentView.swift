@@ -3,20 +3,183 @@
 //  InvoiceProgram
 //
 //  Created by Ernesto Carocca on 2023-01-18.
+/*
+   
+   
+   NewClientView()
+       .tabItem(){
+           Image(systemName: "person.fill.badge.plus")
+               .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
+           Text("Kunder")
+           
+       }*/
 //
-
+import PDFKit
 import SwiftUI
 import Firebase
-//import FirebaseAuth
+import FirebaseAuth
 
-
-
+var email = "" 
 struct ContentView: View {
+    
+    @State private var CreateAnInvoiceitem = "contextualmenu.and.cursorarrow.fill"
+    //var db = Firestore.firestore()
+    
+    @EnvironmentObject var viewLoginUser: LoginUser
+    //   @ObservedObject var sharedData = SharedData()
+    @State  var password = ""
+    @State private var userIslogggedIn = false
+    @State var user : User?
+    var db = Firestore.firestore()
+    //@State var dateString = ""
+    @State var users =  [User]()
+    
+    
+    var body: some View {
+        
+        NavigationView{
+            VStack{
+                if viewLoginUser.signedIn {
+                    
+                    Text("ec").onAppear{
+                        
+                        getCurrentUser()
+                        print("här är jag 2")
+                        
+                        
+                    }
+                    
+                    
+                    if let user = self.user {
+                        Text("").onAppear{
+                            print("här är jag 3")
+                            print(user.email)
+                        }
+                        
+                       // StartListView(user: user)
+                        TabView{
+                               StartListView(user: user)
+                                   .tabItem(){
+                                       Image(systemName: "florinsign.square")
+                                       
+                                       Text("Fakturor")
+                                       
+                                   }
+                            NewClientView()
+                                .tabItem(){
+                                    Image(systemName: "person.fill.badge.plus")
+                                        .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                    Text("Kunder")
+                                    
+                                }
+                               
+                           }
+                        
+                        
+                    }
+                 
+                    
+                    Button(action: {
+                        viewLoginUser.signOut()
+                        user = nil
+                        //   email = ""
+                    }, label:{
+                        Image(systemName: "figure.walk.departure")
+                        
+                        //Text("Logga ut")
+                        //frame(width: 8,height: 4)
+                        
+                    })
+                  
+                    
+                    
+                    
+                }
+                
+                else {
+                   
+                    
+                    SignInView()
+                    
+                    
+                }
+               
+                
+                
+            }
+          
+            
+        } .onAppear{
+            
+            viewLoginUser.signedIn = viewLoginUser.isSignedIn
+            listenToFirestore()
+            
+        }
+    }
+    func saveToFirestore(user :User) {
+    
+        
+        do{
+            _ = try    db.collection("users").addDocument(from: user)
+            
+        }catch {
+            print("Error saving to DB")
+        }
+        
+    }
+    func listenToFirestore()  {
+       
+    db.collection("users").addSnapshotListener { snapshot, err in
+        guard let snapshot = snapshot else {return}
+        
+        if let err = err {
+            print("Error getting document \(err)")
+        } else {
+           users.removeAll()
+            for document in snapshot.documents {
+             
+                print(document)
+                let result = Result {
+                    try document.data(as: User.self)
+                    
+                }
+                switch result  {
+                case .success(let user)  :
+                    users.append(user)
+                    print(user)
+                    print("added to  list")
+                case .failure(let error) :
+                    print("Error decoding item: \(error)")
+                }
+                
+            }
+         
+        }
+    }
+     
+    }
+    func getCurrentUser(){
+        print("i get getcurrentuser")
+        print(self.user?.email ?? "null")
+        for user in users {
+         //   print(user.email)
+           // print(email)
+            if(user.email == email){
+                print("hittade!!")
+                print(user.email)
+                self.user = user
+            }
+        }
+       
+    }
+}
+
+struct SignInView: View {
     //  var db = Firestore.firestore()
     
-    
-    
-    @State var email = ""
+    @EnvironmentObject var viewLoginUser: LoginUser
+    @State var emailText = ""
+  //  @ObservedObject var sharedData = SharedData()
     @State  var password = ""
     @State private var userIslogggedIn = false
     //@State var dateString = ""
@@ -34,9 +197,7 @@ struct ContentView: View {
                     .rotationEffect(.degrees(650))
                     .offset(y:-350)
                 
-                    .navigationBarItems(trailing: NavigationLink(destination:InvoicesView()){
-                        Text("Logga In")
-                    })
+                
                 
                 VStack(spacing: 20){
                     Text("Välkommen")
@@ -51,15 +212,19 @@ struct ContentView: View {
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .offset(y: -100)
                     
-                    TextField("email",text: $email)
+                    TextField("email",text: $emailText)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                         .foregroundColor(.white)
                         .textFieldStyle(.plain)
-                        .placeholder(when: email.isEmpty){
+                        .placeholder(when: emailText.isEmpty){
                             Text("Email")
                                 .foregroundColor(.white)
                                 .bold()
                             
+                            
                         }
+                    
                     
                     Rectangle()
                         .frame(width: 350, height: 1)
@@ -78,9 +243,15 @@ struct ContentView: View {
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
-                    Button { register()
+                    Button { //register()
+                        email = emailText
+                        guard !email.isEmpty, !password.isEmpty else {
+                            return
+                        }
+                       viewLoginUser.signIn(email:email, password: password)
+                        
                     }label: {
-                        Text("Registrera dig här!")
+                        Text("logga in")
                             .bold()
                             .frame(width: 200, height: 40)
                         
@@ -90,27 +261,24 @@ struct ContentView: View {
                                 
                             )
                     }
-                    .padding(.top)
-                    .offset(y:50)
-                    Button{
-                        login()
-                    }label: {
-                        Text("Är du redan en användare? Logga in här")
-                            .bold()
-                            .foregroundColor(.white)
-                            .padding(-40)
-                    }
-                    
-                    .ignoresSafeArea()
+                    .padding()
+                 
+                    NavigationLink("Skapa ett konto här", destination: SignUpView())
                     
                     
-                    Text( "DreamIT to liv IT")
+                  
+    
+                    
+                   
+                    
+                    
+                    Text( "DreamIT to live IT")
                         .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
                         .font(.system(size: 35, weight: .bold, design: .rounded))
                         .offset(y: 130)
                         .frame(alignment: .center)
                         .padding()
-                    
+                     
                 }
                 
                 .frame(width:350, height: 1)
@@ -133,172 +301,238 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
     }
-    func login(){
-        Auth.auth().signIn(withEmail: email, password: password){ result, error in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            
-        }
-    }
-    func register(){
-        Auth.auth().createUser(withEmail: email, password: password){result, error in
-            if error != nil{
-                print(error!.localizedDescription)
-            }
-        }
-        
-    }
-    
-    
-    
-    
-    struct userLogIn:View {
-        var body: some View {
-            
-            Text("Logga in ")
-                .font(.system(size: 30,weight: .heavy))
-                .frame(width: 200,height: 50,
-                       alignment: .center)
-                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .padding()
-                .ignoresSafeArea()
-        }
-    }
-    
-    struct InvoicesView: View {
-        var db = Firestore.firestore()
-        @State var invoices =  [Invoice]()
-        
-        
-        
-        var body: some View {
-            
-            
-            
-            VStack(alignment: .leading){
-                
-                //  RoundedRectangle(cornerRadius: 50, style: .circular)
-                
-                /*  if(!invoices.isEmpty){
-                 Text(invoices[0].company.name)
-                 .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
-                 .font(.system(size: 20, weight: .bold, design: .rounded))
-                 .offset(y: -500)
-                 .frame(alignment: .center)
-                 
-                 
-                 
-                 
-                 }
-                 */
-                NavigationView{
-                    List(invoices) { invoice in
-                        Text("Fakturanummer \(invoice.invoiceNummer)")
-                    }
-                    .navigationTitle("faktura")
-                    .navigationBarItems(trailing: Button(action: { //add
-                    },label:{ Image(systemName: "plus")
-                        
-                    }))
-                }
-                
-                
-                
-                
-                
-                .padding()
-                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .background(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
-                
-                .navigationTitle("Fakturor")
-                
-                
-                
-                .onAppear(){
-                    
-                    
-                    let company =   Company(name: "DreamIt", organizationNumber: 555, CompanyAddress: "Sunneplan12", vatNumber: 55501, ourReference: "Ernesto")
-                    
-                    let user = User(name: "Leandro", surname: "abduka", personalId: 1984, profession: "smart", email: " lea@samrt.se")
-                    
-                    let client = Client(name: "kth", organizationNumber: 5511)
-                    
-                    // saveToFirestore(invoiceName: client.name, comp: company, cli: client, user: user, invoiceNr: 506, currentDate: Date.now)
-                    
-                    listenToFirestore()
-                    
-                    
-                }
-            }
-        }
-        func saveToFirestore(invoiceName: String,comp : Company ,cli : Client,user : User, invoiceNr : Int, currentDate: Date) {
-            let invoice = Invoice(name: invoiceName, company: comp, client: cli,user: user ,invoiceNummer: invoiceNr , date: currentDate)
-            
-            do{
-                _ = try    db.collection("invoices").addDocument(from: invoice)
-                
-            }catch {
-                print("Error saving to DB")
-            }
-            
-        }
-        
-        
-        func listenToFirestore() {
-            db.collection("invoices").addSnapshotListener { snapshot, err in
-                guard let snapshot = snapshot else {return}
-                
-                if let err = err {
-                    print("Error getting document \(err)")
-                } else {
-                    invoices.removeAll()
-                    for document in snapshot.documents {
-                        
-                        let result = Result {
-                            try document.data(as: Invoice.self)
-                        }
-                        switch result  {
-                        case .success(let invoice)  :
-                            invoices.append(invoice)
-                        case .failure(let error) :
-                            print("Error decoding item: \(error)")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+
 }
-        
-        extension View {
-            func placeholder<Content:View>(
-                when shouldShow: Bool,
-                alignment: Alignment = .leading,
-                @ViewBuilder placeholder: () -> Content) -> some View {
+
+        struct SignUpView: View {
+            //  var db = Firestore.firestore()
+            
+            @EnvironmentObject var viewLoginUser: LoginUser
+            
+            @State var emailText = ""
+            @State  var password = ""
+            @State private var userIslogggedIn = false
+            //@State var dateString = ""
+            
+            
+            
+            var body: some View {
+                NavigationView{
                     
-                    ZStack(alignment: alignment) {
-                        placeholder().opacity(shouldShow ? 1 : 0)
-                        self
+                    ZStack{
+                        Color.black
+                        RoundedRectangle(cornerRadius: 30, style: .continuous)
+                            .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: 600, height: 1000)
+                            .rotationEffect(.degrees(650))
+                            .offset(y:-350)
+                        
+                           
+                        
+                        VStack(spacing: 20){
+                            Text("Välkommen")
+                                .foregroundColor(.white)
+                                .font(.system(size: 40, weight: .bold, design: .rounded))
+                                .offset(y: -70)
+                            
+                            
+                            
+                            Text("Början till att äga din dröm")
+                                .foregroundColor(.white)
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .offset(y: -100)
+                            
+                            TextField("email",text: $emailText)
+                                .disableAutocorrection(true)
+                                .autocapitalization(.none)
+                                .foregroundColor(.white)
+                                .textFieldStyle(.plain)
+                                .placeholder(when:emailText.isEmpty){
+                                    Text("Email")
+                                        .foregroundColor(.white)
+                                        .bold()
+                                    
+                                    
+                                }
+                            
+                            
+                            Rectangle()
+                                .frame(width: 350, height: 1)
+                                .foregroundColor(.white)
+                            
+                            SecureField("password",text: $password)
+                                .foregroundColor(.white)
+                                .textFieldStyle(.plain)
+                                .placeholder(when: password.isEmpty){
+                                    Text("Lösenord")
+                                        .foregroundColor(.white)
+                                        .bold()
+                                }
+                            
+                            
+                            Rectangle()
+                                .frame(width: 350, height: 1)
+                                .foregroundColor(.white)
+                            Button { //register()
+                                email = emailText
+                                guard !email.isEmpty, !password.isEmpty else {
+                                    return
+                                }
+                               viewLoginUser.signUp(email: email, password: password)
+                                var fbm = FirebaseManager()
+                                fbm.saveToFirestore(user: User(name: "ec", surname: "ca", personalId: 8, address: "virre", profession: "bra", email: email))
+                            }label: {
+                                Text("Skapa Konto! ")
+                                    .bold()
+                                    .frame(width: 200, height: 40)
+                                
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10,style: .continuous)
+                                            .fill(.linearGradient(colors: [.blue , .black], startPoint: .top, endPoint: .bottomTrailing))
+                                        
+                                    )
+                            }
+                            .padding()
+                            Spacer()
+                              
+                           NavigationLink("Gå till login!",destination: SignInView())
+                                .foregroundColor(.blue)
+                           .padding()
+                       
+                            /*  Button{
+                             //  login()
+                             }label: {
+                             Text("Är du redan en användare? Logga in här")
+                             .bold()
+                             .foregroundColor(.white)
+                             .padding(-40)
+                             }*/
+                            
+                          
+                            
+                            
+                            Text( "DreamIT to live IT")
+                                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .font(.system(size: 35, weight: .bold, design: .rounded))
+                                .offset(y: 130)
+                                .frame(alignment: .center)
+                                .padding()
+                             
+                        }
+                        .padding()
+                        .frame(width:350, height: 1)
+                        .foregroundColor(.white)
                         
                     }
+                    
+                    
+                    .frame(width: 50)
+                    
+                    .onAppear(){
+                        
+                        Auth.auth().addStateDidChangeListener { auth, user in
+                            if user != nil {
+                                userIslogggedIn.toggle()
+                            }
+                        }
+                    }
+                    
                 }
+                
+            }
+    
+            
+   
+            
         }
+
+
+
+extension View {
+    func placeholder<Content:View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+            
+            ZStack(alignment: alignment) {
+                placeholder().opacity(shouldShow ? 1 : 0)
+                self
+                
+            }
+        }
+}
+    
+    
+struct StartListView : View {
+    var db = Firestore.firestore()
+    @State var invoices =  [Invoice]()
+    @State var user: User
+    var body: some View {
+        
+      
+        VStack(){
+            
+            NavigationView{
+              
+                ZStack{
+                    List(invoices) { invoice in
+                        PdfView()
+                     //InvoiceDetails(invoice: invoice))
+                        NavigationLink(destination: InvoiceDetails(invoice: invoice)) {
+                            Text("Fakturanummer \(invoice.invoiceNummer)")
+                                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
+
+                        }
+                    }
+.navigationBarItems(trailing: NavigationLink(destination:NewInvoice( user: user, client: Client())){
+                        Image(systemName: "plus")
+                    })
+                    .navigationTitle("fakturor")
+                }
+                
+            }
+        }
+        .onAppear{
+            listenToFirestore()
+        }
+    }
+    func listenToFirestore() {
+        db.collection("invoices").addSnapshotListener { snapshot, err in
+            guard let snapshot = snapshot else {return}
+            
+            if let err = err {
+                print("Error getting document \(err)")
+            } else {
+                invoices.removeAll()
+                for document in snapshot.documents {
+                    
+                    let result = Result {
+                        try document.data(as: Invoice.self)
+                    }
+                    switch result  {
+                    case .success(let invoice)  :
+                        if(invoice.user.email ==  user.email){
+                            invoices.append(invoice)
+                        }
+                    case .failure(let error) :
+                        print("Error decoding item: \(error)")
+                    }
+                }
+            }
+        }
+    }
+        
+}
     
     
     
     
-    
-    
-    
-    
-        struct ContentView_Previews: PreviewProvider {
+     /*   struct ContentView_Previews: PreviewProvider {
          static var previews: some View {
           ContentView()
       }
     }
-    
+    */
     
     
     

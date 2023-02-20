@@ -23,6 +23,7 @@
 		BF9596A62994A2E900E48802 /* NewInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A52994A2E900E48802 /* NewInvoice.swift */; };
 		BF9596A82994ABFB00E48802 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A72994ABFB00E48802 /* ListView.swift */; };
 		BF9596AA2995031300E48802 /* InvoiceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A92995031300E48802 /* InvoiceDetails.swift */; };
+		BF97E02729A1670B00A779DD /* PdfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF97E02629A1670B00A779DD /* PdfView.swift */; };
 		BFA23FAC299B9B2700110905 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA23FAB299B9B2700110905 /* FirebaseManager.swift */; };
 		BFA23FAE299CF6E200110905 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA23FAD299CF6E200110905 /* SharedData.swift */; };
 		BFA23FB0299D284D00110905 /* NewClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA23FAF299D284D00110905 /* NewClientView.swift */; };
@@ -71,6 +72,7 @@
 		BF9596A52994A2E900E48802 /* NewInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInvoice.swift; sourceTree = "<group>"; };
 		BF9596A72994ABFB00E48802 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		BF9596A92995031300E48802 /* InvoiceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceDetails.swift; sourceTree = "<group>"; };
+		BF97E02629A1670B00A779DD /* PdfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdfView.swift; sourceTree = "<group>"; };
 		BFA23FAB299B9B2700110905 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		BFA23FAD299CF6E200110905 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		BFA23FAF299D284D00110905 /* NewClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClientView.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				BF2026DE297825000019A12B /* Assets.xcassets */,
 				BF20272929783A300019A12B /* GoogleService-Info.plist */,
 				BF2026E0297825000019A12B /* Preview Content */,
+				BF97E02629A1670B00A779DD /* PdfView.swift */,
 			);
 			path = InvoiceProgram;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				BF0E129529892A9C009245A5 /* User.swift in Sources */,
 				BF9596A4299449F300E48802 /* InvoiceListView.swift in Sources */,
 				BF2026DB297824FA0019A12B /* InvoiceProgramApp.swift in Sources */,
+				BF97E02729A1670B00A779DD /* PdfView.swift in Sources */,
 				BF0E1293298927D9009245A5 /* Client.swift in Sources */,
 				BF0E12912989218C009245A5 /* Company.swift in Sources */,
 				BFA23FAE299CF6E200110905 /* SharedData.swift in Sources */,
