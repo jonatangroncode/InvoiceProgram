@@ -58,19 +58,9 @@ struct NewClientView: View {
                     Image(systemName: "person.3.sequence.fill")
                         .foregroundColor(.green)
                         .padding()
-                        .ignoresSafeArea()
                 })
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+               
+            
             }
             .onAppear{
                 getChosenClient()
@@ -168,19 +158,14 @@ struct NewClientView: View {
         var body: some View{
             
             ZStack(){
-                Color.black
+                Color.white
                     .ignoresSafeArea()
-                    .frame(width: 40, height: 1000)
-                    .rotationEffect(.degrees(690))
+                    
+                    
                     .offset(y:2)
                     .padding()
                 
-                    .background(
-                        
-                        RoundedRectangle(cornerRadius: 20,style: .continuous)
-                        
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.2), .red.opacity(0.2)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                
+                    
                 VStack{
                     
                     TextField("kund ",text: $clientName)

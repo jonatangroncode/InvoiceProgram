@@ -10,6 +10,7 @@ import Firebase
 
 struct NewInvoice: View {
     var db = Firestore.firestore()
+    @State private var showAlert = false
     @State var jobAssignment = ""
     @State var workedHour = ""
     @State var reference = ""
@@ -24,8 +25,7 @@ struct NewInvoice: View {
     @State var clientName = ""
     
    
-    var body: some View
-    {
+    var body: some View{
         Section(header: Text("Faktura uppgifter")){
             
             Form{
@@ -54,11 +54,17 @@ struct NewInvoice: View {
         //  TextField("Belopp", text: $createNewInvoice)
         Button{
            let invoiceAmountDouble = Double(invoiceAmount)
-            getChosenClient()
-            addNewInvoice(invoiceAmount: invoiceAmountDouble ?? 0.0,
-                          cli: Client( name: clientName, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
-                          user:User(email: user.email), 
-                                     lastPayDate: lastInvoicePayDate)
+           
+            if(getChosenClient()){
+                addNewInvoice(invoiceAmount: invoiceAmountDouble ?? 0.0,
+                              cli: Client( name: client?.name, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
+                              user:User(email: user.email),
+                                         lastPayDate: lastInvoicePayDate)
+            }else {
+               showAlert = true
+            }
+            
+         
             //newInvoiceNummer()
         } label: {
             
@@ -68,8 +74,14 @@ struct NewInvoice: View {
                 .background(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
                 .padding()
         }
-        
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Kunden finns inte!"), message: Text("Var vänlig och skapa kund först"), dismissButton: .default(Text("OK")))
         }
+        .onAppear{
+            listenToClientInFirestore()
+        }
+        }
+        
     func addNewInvoice(invoiceAmount: Double ,cli : Client,user : User, lastPayDate : Date) {
             
             var date: String {
@@ -152,21 +164,20 @@ struct NewInvoice: View {
         }
     
     
-    func getChosenClient(){
-      
+    func getChosenClient()-> Bool {
+      print(clients)
         for client in clients {
-         //   print(user.email)
+         print(client.name ?? "fel")
            // print(email)
             if(client.name == clientName){
-                print("hittade!!")
+                print("hittade client!!")
                 print(client.name ?? "")
                 self.client = client
-                
-                    
+                return true
             }
         }
-       
-    }
+        return false
+       }
     func getLastInvoiceNumber(completion: @escaping (Int) -> Void) {
         db.collection("invoices")
             .order(by: "invoiceNummer", descending: true)

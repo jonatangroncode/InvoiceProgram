@@ -38,6 +38,7 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView{
+            
             VStack{
                 if viewLoginUser.signedIn {
                     
@@ -51,125 +52,111 @@ struct ContentView: View {
                     
                     
                     if let user = self.user {
-                        Text("").onAppear{
-                            print("här är jag 3")
-                            print(user.email)
-                        }
-                    
-                        
-                       // StartListView(user: user)
+                       
                         TabView{
-                           StartListView(user: user)
-                                .tabItem {
-                                       Image(systemName: "florinsign.square")
-                                    Text("FAKTUROR")
-                                     }
                             NewClientView()
                                 .tabItem {
-                                    Image(systemName: "person.fill.badge.plus")
+                                       Image(systemName: "florinsign.square")
+                                        .resizable()
+
                                     Text("Kunder")
+                                     }
+                            
+                            StartListView(user: user)
+                            
+                                .tabItem {
+                                    Image(systemName: "person.fill.badge.plus")
+                                        .resizable()
+
+                                    Text("FAKTUROR")
                                     
                                 }
                                
                            }
+                        .accentColor(.orange)
+                        .offset(y:68)
+                        
+                        }
                         
                         
-                    }
-                    Button(action: {
+                     Button(action: {
                         viewLoginUser.signOut()
                         user = nil
                         //   email = ""
-                    }, label:{
-                        
-                        
-                    Text("Logga ut")
-                        
+                    }, label:{ Text("logga ut")
+                            .font(.system(size:12))
+                        Image(systemName: "figure.walk.departure")
+                                            .resizable()
+                                            .frame(width: 15, height: 15)
                     })
-                    .frame(width: 10,height: 20)
-                    .padding()
-                    .offset(y: -200)
-                    
-                    
-                    
-                }
-                
-                else {
-                   
-                    
-                    SignInView()
-                    
-                    
-                }
                
-                
-                
+
+                    
+                    
+                    
+                } else {
+                    SignInView()
+                }
             }
           
+            .onAppear{
+                
+                viewLoginUser.signedIn = viewLoginUser.isSignedIn
+                listenToFirestore()
             
-        } .onAppear{
-            
-            viewLoginUser.signedIn = viewLoginUser.isSignedIn
-            listenToFirestore()
-            
-        }
-    }
-    func saveToFirestore(user :User) {
-    
-        
-        do{
-            _ = try    db.collection("users").addDocument(from: user)
-            
-        }catch {
-            print("Error saving to DB")
+                
+            }
         }
         
     }
-    func listenToFirestore()  {
        
-    db.collection("users").addSnapshotListener { snapshot, err in
-        guard let snapshot = snapshot else {return}
-        
-        if let err = err {
-            print("Error getting document \(err)")
-        } else {
-           users.removeAll()
-            for document in snapshot.documents {
-             
-                print(document)
-                let result = Result {
-                    try document.data(as: User.self)
+            func listenToFirestore()  {
+                
+                db.collection("users").addSnapshotListener { snapshot, err in
+                    guard let snapshot = snapshot else {return}
                     
-                }
-                switch result  {
-                case .success(let user)  :
-                    users.append(user)
-                    print(user)
-                    print("added to  list")
-                case .failure(let error) :
-                    print("Error decoding item: \(error)")
+                    if let err = err {
+                        print("Error getting document \(err)")
+                    } else {
+                        users.removeAll()
+                        for document in snapshot.documents {
+                            
+                            print(document)
+                            let result = Result {
+                                try document.data(as: User.self)
+                                
+                            }
+                            switch result  {
+                            case .success(let user)  :
+                                users.append(user)
+                                print(user)
+                                print("added to  list")
+                            case .failure(let error) :
+                                print("Error decoding item: \(error)")
+                            }
+                            
+                        }
+                        
+                    }
                 }
                 
             }
-         
-        }
-    }
-     
-    }
-    func getCurrentUser(){
-        print("i get getcurrentuser")
-        print(self.user?.email ?? "null")
-        for user in users {
-         //   print(user.email)
-           // print(email)
-            if(user.email == email){
-                print("hittade!!")
-                print(user.email)
-                self.user = user
+            func getCurrentUser(){
+                print("i get getcurrentuser")
+                print(self.user?.email ?? "null")
+                for user in users {
+                    //   print(user.email)
+                    // print(email)
+                    if(user.email == email){
+                        print("hittade!!")
+                        print(user.email)
+                        self.user = user
+                    }
+                }
+                
             }
-        }
-       
+        
     }
-}
 
 struct SignInView: View {
     //  var db = Firestore.firestore()
@@ -302,7 +289,7 @@ struct SignInView: View {
 }
 
         struct SignUpView: View {
-            //  var db = Firestore.firestore()
+              var db = Firestore.firestore()
             
             @EnvironmentObject var viewLoginUser: LoginUser
             
@@ -376,8 +363,8 @@ struct SignInView: View {
                                     return
                                 }
                                viewLoginUser.signUp(email: email, password: password)
-                               // var fbm = FirebaseManager(user : User, _ client: Client)
-                              //  fbm.saveToFirestore(user: User(name: "ec", surname: "ca", personalId: 8, address: "virre", profession: "bra", email: email))
+                               print("signedUp1")
+                                saveToFirestore(user: User( email: email))
                             }label: {
                                 Text("Skapa Konto! ")
                                     .bold()
@@ -437,7 +424,17 @@ struct SignInView: View {
                 }
                 
             }
-    
+            func saveToFirestore(user :User) {
+             
+                    print("inFunction")
+                    do{
+                        _ = try    db.collection("users").addDocument(from: user)
+                        
+                    }catch {
+                        print("Error saving to DB")
+                    }
+                    
+                }
             
    
             
@@ -460,42 +457,39 @@ extension View {
 }
     
     
-struct StartListView : View {
+struct StartListView: View {
     var db = Firestore.firestore()
-    @State var invoices =  [Invoice]()
+    @State var invoices = [Invoice]()
     @State var user: User
     
     var body: some View {
-        
-      
-        VStack(){
-            
-            NavigationView{
-              
-                ZStack{
-                    List(invoices) { invoice in
-                    //    PdfView()
-                     //InvoiceDetails(invoice: invoice))
-                        NavigationLink(destination: InvoiceDetails(invoice: invoice)) {
-                            Text("Fakturanummer \(invoice.invoiceNummer)")
-                            
-                                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
-
-                        }
-                    }
-                    .navigationBarItems(trailing: NavigationLink(destination:NewInvoice( user: user)){
-                        Image(systemName: "plus")
-                    })
-                    .navigationTitle("fakturor")
-                }
-                
+        VStack {
+            NavigationLink(destination: NewInvoice(user: user)){
+              HStack {
+                Text("Skapa en faktura")
+                Image(systemName: "plus")
+                  .foregroundColor(.white)
+              }
+             
+              .background(Color.black)
+              .foregroundColor(.white)
             }
+          
+            
+                List(invoices) { invoice in
+                    NavigationLink(destination: InvoiceDetails(invoice: invoice)) {
+                        Text("Fakturanummer \(invoice.invoiceNummer)")
+                    }
+                }
+            
         }
-        .onAppear{
+        
+        .onAppear {
             listenToFirestore()
         }
     }
-    func listenToFirestore() {
+
+func listenToFirestore() {
         db.collection("invoices").addSnapshotListener { snapshot, err in
             guard let snapshot = snapshot else {return}
             
@@ -522,7 +516,6 @@ struct StartListView : View {
     }
         
 }
-    
     
     
     

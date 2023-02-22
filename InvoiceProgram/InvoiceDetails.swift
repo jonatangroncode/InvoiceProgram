@@ -15,16 +15,18 @@ struct InvoiceDetails: View  {
         let lastPayDayString = convertDateToString(invoice.lastPayDate)
         
         VStack{
-            VStack{ Color.black
+         
+            VStack{
+                
                 Text("DreamIT")
                     .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
             }
-                .offset(y: -150)
+                .offset(y: 80)
                 .font(.system(size: 35 ,weight: .bold))
                 .bold()
-                .padding()
-            
-                VStack{
+                .ignoresSafeArea()
+               
+            VStack{
                     VStack{
                         
                         Text("FAKTURA")
@@ -61,7 +63,7 @@ struct InvoiceDetails: View  {
             .foregroundColor(.white)
             .bold()
             .padding()
-            .frame(width: 380, height: 180)
+            .frame(width: 360, height: 180)
             .font(.system(size: 20 ,weight: .bold))
               
             .background(
@@ -70,7 +72,7 @@ struct InvoiceDetails: View  {
             
             .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)))
            
-            .offset(y: -150)
+            .offset(y: 190)
             
                   
             VStack{
@@ -95,7 +97,7 @@ struct InvoiceDetails: View  {
                 
                     
             }
-            .offset(y: -100)
+            .offset(y: 250)
             Spacer()
             
             VStack{
@@ -112,15 +114,15 @@ struct InvoiceDetails: View  {
                         
                         .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)))
                 }
-                
             .padding()
+            .offset(y:-70)
           
             
             }
         
-        .padding()
-        .background(Color.black)
+        .background(.black)
         .ignoresSafeArea()
+        
             
             
             
@@ -148,10 +150,10 @@ func convertDateToString(_ date: Date) -> String {
  Text(" Adress:" + "\(invoice.client?.CompanyAdres ?? "")")
  Text(" Orgnr :" + "\(invoice.client?.organizationNumber ?? "")")
  */
-/*
+
 struct InvoiceDetails_Previews: PreviewProvider {
     static var previews: some View {
-        InvoiceDetails(invoice: Invoice(user: User(email: "email", invoices: [Invoice]() ), date: "", lastPayDate: "", amount: 0.0))
+        InvoiceDetails(invoice: Invoice(user: User(email: "email", invoices: [Invoice]() ), date: "", lastPayDate: Date(), amount: 0.0))
     }
 }
-*/
+
