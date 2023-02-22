@@ -41,7 +41,7 @@ struct ContentView: View {
             VStack{
                 if viewLoginUser.signedIn {
                     
-                    Text("ec").onAppear{
+                    Text("").onAppear{
                         
                         getCurrentUser()
                         print("här är jag 2")
@@ -55,20 +55,18 @@ struct ContentView: View {
                             print("här är jag 3")
                             print(user.email)
                         }
+                    
                         
                        // StartListView(user: user)
                         TabView{
-                               StartListView(user: user)
-                                   .tabItem(){
+                           StartListView(user: user)
+                                .tabItem {
                                        Image(systemName: "florinsign.square")
-                                       
-                                       Text("Fakturor")
-                                       
-                                   }
+                                    Text("FAKTUROR")
+                                     }
                             NewClientView()
-                                .tabItem(){
+                                .tabItem {
                                     Image(systemName: "person.fill.badge.plus")
-                                        .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
                                     Text("Kunder")
                                     
                                 }
@@ -77,20 +75,19 @@ struct ContentView: View {
                         
                         
                     }
-                 
-                    
                     Button(action: {
                         viewLoginUser.signOut()
                         user = nil
                         //   email = ""
                     }, label:{
-                        Image(systemName: "figure.walk.departure")
                         
-                        //Text("Logga ut")
-                        //frame(width: 8,height: 4)
+                        
+                    Text("Logga ut")
                         
                     })
-                  
+                    .frame(width: 10,height: 20)
+                    .padding()
+                    .offset(y: -200)
                     
                     
                     
@@ -379,8 +376,8 @@ struct SignInView: View {
                                     return
                                 }
                                viewLoginUser.signUp(email: email, password: password)
-                                var fbm = FirebaseManager()
-                                fbm.saveToFirestore(user: User(name: "ec", surname: "ca", personalId: 8, address: "virre", profession: "bra", email: email))
+                               // var fbm = FirebaseManager(user : User, _ client: Client)
+                              //  fbm.saveToFirestore(user: User(name: "ec", surname: "ca", personalId: 8, address: "virre", profession: "bra", email: email))
                             }label: {
                                 Text("Skapa Konto! ")
                                     .bold()
@@ -467,6 +464,7 @@ struct StartListView : View {
     var db = Firestore.firestore()
     @State var invoices =  [Invoice]()
     @State var user: User
+    
     var body: some View {
         
       
@@ -476,15 +474,16 @@ struct StartListView : View {
               
                 ZStack{
                     List(invoices) { invoice in
-                        PdfView()
+                    //    PdfView()
                      //InvoiceDetails(invoice: invoice))
                         NavigationLink(destination: InvoiceDetails(invoice: invoice)) {
                             Text("Fakturanummer \(invoice.invoiceNummer)")
+                            
                                 .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
 
                         }
                     }
-.navigationBarItems(trailing: NavigationLink(destination:NewInvoice( user: user, client: Client())){
+                    .navigationBarItems(trailing: NavigationLink(destination:NewInvoice( user: user)){
                         Image(systemName: "plus")
                     })
                     .navigationTitle("fakturor")
@@ -527,11 +526,7 @@ struct StartListView : View {
     
     
     
-     /*   struct ContentView_Previews: PreviewProvider {
-         static var previews: some View {
-          ContentView()
-      }
-    }
+     /*  
     */
     
     

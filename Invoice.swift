@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct Invoice : Codable, Identifiable  {
     @DocumentID   var id : String?
-    var name : String = ""
+    var name : String?
     var company : Company?
     var client : Client?
     var user : User
@@ -19,10 +19,11 @@ struct Invoice : Codable, Identifiable  {
     var CompanyAdres : String?
     var vat : Int = 0
     var date : String
-    var amount: Double = 10000.00
+    var lastPayDate : Date
+    var amount:  Double
     var total : Double {
-        return amount * 1.25
-    }
+    return amount * 1.25
+}
     
     
     

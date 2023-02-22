@@ -7,56 +7,78 @@
 
 import SwiftUI
 import Firebase
+
 struct NewInvoice: View {
     var db = Firestore.firestore()
-    // @State var invoices =  [Invoice]()
-    @State private var clientName = ""
-    @State private var nameInvoice = ""
-    @State private var invoiceNummerCounter = 0
+    @State var jobAssignment = ""
+    @State var workedHour = ""
+    @State var reference = ""
+    @State var invoiceAmount = ""
+    @State var lastInvoicePayDate = Date()
     @State var invoices =  [Invoice]()
     @State var invoice : Invoice?
-    @State var user: User
     @State var users =  [User]()
-    @State var client: Client
+    @State var client: Client?
     @State var clients =  [Client]()
-    var body: some View {
-        TextField("Kund", text: $clientName)
-            .font(.largeTitle)
-            .foregroundColor(.black)
-        TextField("faktura namn", text: $nameInvoice)
-            .font(.largeTitle)
-            .foregroundColor(.black)
+    @State var user : User
+    @State var clientName = ""
+    
+   
+    var body: some View
+    {
+        Section(header: Text("Faktura uppgifter")){
+            
+            Form{
+                DatePicker("Förfallodag", selection: $lastInvoicePayDate,  displayedComponents: .date)
+                TextField("Kund", text: $clientName)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+                TextField("Faktura belopp", text: $invoiceAmount)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+                
+                TextField("UPPDRAG", text: $jobAssignment)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+                TextField("ANTAL TIM", text: $workedHour)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+                TextField("REFERENS", text: $reference)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+            }
+        }
         
         
         
         //  TextField("Belopp", text: $createNewInvoice)
         Button{
+           let invoiceAmountDouble = Double(invoiceAmount)
             getChosenClient()
-            addNewInvoice(invoiceName: nameInvoice,
-                          cli: Client( name: client.name, organizationNumber: client.organizationNumber, CompanyAdres: client.CompanyAdres, vat: client.vat, personalId: client.personalId, referens: client.referens),
-                          user:User(email: user.email),
-                          invoiceNr: .random(in: 1...100) )
+            addNewInvoice(invoiceAmount: invoiceAmountDouble ?? 0.0,
+                          cli: Client( name: clientName, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
+                          user:User(email: user.email), 
+                                     lastPayDate: lastInvoicePayDate)
             //newInvoiceNummer()
         } label: {
+            
+            
             Text("Spara Faktura")
                 .foregroundColor(.black)
                 .background(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing))
                 .padding()
         }
-        .onAppear{
-            
-            listenToUserInFirestore()
-            listenToClientInFirestore()
-         
+        
         }
-        }
-        func addNewInvoice(invoiceName: String, cli : Client,user : User, invoiceNr : Int) {
+    func addNewInvoice(invoiceAmount: Double ,cli : Client,user : User, lastPayDate : Date) {
             
             var date: String {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd"
                 return dateFormatter.string(from: Date())}
-            let invoice = Invoice(name: invoiceName, client: cli,user: user ,invoiceNummer: invoiceNr,date: date)
+
+        getLastInvoiceNumber { newInvoiceNumber in
+            let invoice = Invoice(client: cli,user: user ,invoiceNummer: newInvoiceNumber,date: date, lastPayDate: lastPayDate, amount: invoiceAmount)
             
             do{
                 _ = try    db.collection("invoices").addDocument(from: invoice)
@@ -64,7 +86,7 @@ struct NewInvoice: View {
             }catch {
                 print("Error saving to DB")
             }
-            
+        }
         }
     
         
@@ -145,6 +167,21 @@ struct NewInvoice: View {
         }
        
     }
+    func getLastInvoiceNumber(completion: @escaping (Int) -> Void) {
+        db.collection("invoices")
+            .order(by: "invoiceNummer", descending: true)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error getting last invoice number: \(error)")
+                    completion(0)
+                } else {
+                    let lastInvoiceNumber = snapshot?.documents.first?.data()["invoiceNummer"] as? Int ?? 0
+                    completion(lastInvoiceNumber + 1)
+                }
+            }
+    }
+
 }
 
 
