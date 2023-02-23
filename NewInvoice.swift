@@ -24,7 +24,7 @@ struct NewInvoice: View {
     @State var user : User
     @State var clientName = ""
     
-   
+    
     var body: some View{
         Section(header: Text("Faktura uppgifter")){
             
@@ -62,19 +62,21 @@ struct NewInvoice: View {
         
         //  TextField("Belopp", text: $createNewInvoice)
         Button{
-           let invoiceAmountDouble = Double(invoiceAmount)
-           
+            let invoiceAmountDouble = Double(invoiceAmount)
+            
             if(getChosenClient()){
                 addNewInvoice(invoiceAmount: invoiceAmountDouble ?? 0.0,
                               cli:  Client( name: client?.name, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
                               user:User(email: user.email),
                               jobAssigment: jobAssignment, workHour: workedHour,
-                                         lastPayDate: lastInvoicePayDate)
+                              lastPayDate: lastInvoicePayDate)
+                
+                makeEmptyString()
             }else {
-               showAlert = true
+                showAlert = true
             }
             
-         
+            
             //newInvoiceNummer()
         } label: {
             
@@ -90,15 +92,15 @@ struct NewInvoice: View {
         .onAppear{
             listenToClientInFirestore()
         }
-        }
-        
+    }
+    
     func addNewInvoice(invoiceAmount: Double ,cli : Client,user : User,jobAssigment : String, workHour: String, lastPayDate : Date) {
-            
-            var date: String {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                return dateFormatter.string(from: Date())}
-
+        
+        var date: String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.string(from: Date())}
+        
         getLastInvoiceNumber { newInvoiceNumber in
             let invoice = Invoice(client: cli,user: user ,invoiceNummer: newInvoiceNumber,invoiceJobAssignment: jobAssigment , invoiceWorkedHour: workHour ,date: date, lastPayDate: lastPayDate, amount: invoiceAmount)
             
@@ -109,76 +111,76 @@ struct NewInvoice: View {
                 print("Error saving to DB")
             }
         }
-        }
+    }
     
+    
+    func listenToUserInFirestore()  {
         
-        func listenToUserInFirestore()  {
+        db.collection("users").addSnapshotListener { snapshot, err in
+            guard let snapshot = snapshot else {return}
             
-            db.collection("users").addSnapshotListener { snapshot, err in
-                guard let snapshot = snapshot else {return}
-                
-                if let err = err {
-                    print("Error getting document \(err)")
-                } else {
-                    users.removeAll()
-                    for document in snapshot.documents {
+            if let err = err {
+                print("Error getting document \(err)")
+            } else {
+                users.removeAll()
+                for document in snapshot.documents {
+                    
+                    print(document)
+                    let result = Result {
+                        try document.data(as: User.self)
                         
-                        print(document)
-                        let result = Result {
-                            try document.data(as: User.self)
-                            
-                        }
-                        switch result  {
-                        case .success(let user)  :
-                            users.append(user)
-                            print(user)
-                            print("added to  list")
-                        case .failure(let error) :
-                            print("Error decoding item: \(error)")
-                        }
-                        
+                    }
+                    switch result  {
+                    case .success(let user)  :
+                        users.append(user)
+                        print(user)
+                        print("added to  list")
+                    case .failure(let error) :
+                        print("Error decoding item: \(error)")
                     }
                     
                 }
-            }
-            
-        }
-        func listenToClientInFirestore()  {
-            
-            db.collection("clients").addSnapshotListener { snapshot, err in
-                guard let snapshot = snapshot else {return}
                 
-                if let err = err {
-                    print("Error getting document \(err)")
-                } else {
-                    clients.removeAll()
-                    for document in snapshot.documents {
+            }
+        }
+        
+    }
+    func listenToClientInFirestore()  {
+        
+        db.collection("clients").addSnapshotListener { snapshot, err in
+            guard let snapshot = snapshot else {return}
+            
+            if let err = err {
+                print("Error getting document \(err)")
+            } else {
+                clients.removeAll()
+                for document in snapshot.documents {
+                    
+                    print(document)
+                    let result = Result {
+                        try document.data(as: Client.self)
                         
-                        print(document)
-                        let result = Result {
-                            try document.data(as: Client.self)
-                            
-                        }
-                        switch result  {
-                        case .success(let client)  :
-                            clients.append(client)
-                        case .failure(let error) :
-                            print("Error decoding item: \(error)")
-                        }
-                        
+                    }
+                    switch result  {
+                    case .success(let client)  :
+                        clients.append(client)
+                    case .failure(let error) :
+                        print("Error decoding item: \(error)")
                     }
                     
                 }
+                
             }
-            
         }
+        
+    }
     
     
     func getChosenClient()-> Bool {
-      print(clients)
+        print(clients)
         for client in clients {
-         print(client.name ?? "fel")
-           // print(email)
+            print(client.name ?? "fel")
+            // print(email)
             if(client.name == clientName){
                 print("hittade client!!")
                 print(client.name ?? "")
@@ -187,7 +189,7 @@ struct NewInvoice: View {
             }
         }
         return false
-       }
+    }
     func getLastInvoiceNumber(completion: @escaping (Int) -> Void) {
         db.collection("invoices")
             .order(by: "invoiceNummer", descending: true)
@@ -202,14 +204,21 @@ struct NewInvoice: View {
                 }
             }
     }
-
+    func makeEmptyString() {
+        clientName = ""
+        invoiceAmount  = ""
+        jobAssignment  = ""
+        workedHour = ""
+        reference  = ""
+        
+    }
 }
 
 
 
 /*struct NewInvoice_Previews: PreviewProvider {
-    static var previews: some View {
-        NewInvoice()
-    }
-    
-}*/
+ static var previews: some View {
+ NewInvoice()
+ }
+ 
+ }*/

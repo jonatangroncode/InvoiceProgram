@@ -8,9 +8,9 @@ import Foundation
 import SwiftUI
 import Firebase
 
- var clientAddress = ""
- var clientYourRefName = ""
- var organizationNumber = 0
+var clientAddress = ""
+var clientYourRefName = ""
+var organizationNumber = 0
 var vatNumber = 0
 var clientName = ""
 
@@ -23,7 +23,7 @@ struct NewClientView: View {
     var body: some View {
         VStack{
             
-           
+            
             /*.ignoresSafeArea()
              .frame(width: 80, height: 500)
              .rotationEffect(.degrees(690))
@@ -32,7 +32,7 @@ struct NewClientView: View {
             
             NavigationView{
                 
-              
+                
                 List{
                     ForEach(clients) { client in
                         NavigationLink( destination: clientDetailsView(client: client)){
@@ -41,8 +41,8 @@ struct NewClientView: View {
                             Image("clintsuite")
                                 .resizable()
                                 .scaledToFill()
-                                
-                        
+                            
+                            
                         }
                         .background(
                             
@@ -50,22 +50,22 @@ struct NewClientView: View {
                             
                                 .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         
-                     
-                            
+                        
+                        
                     }
                     
                 }
-            
-           
-
+                
+                
+                
                 .navigationBarItems(trailing: NavigationLink(destination: CreateClientView()){
                     // circlenavigationCrateClient(color: .black, navigationText: "Ny kund")
                     Image(systemName: "person.3.sequence.fill")
                         .foregroundColor(.green)
                         .padding()
                 })
-               
-            
+                
+                
             }
             .onAppear{
                 getChosenClient()
@@ -94,12 +94,12 @@ struct NewClientView: View {
                 Text("ORGNUMMER" + " \(client.organizationNumber ?? "")")
                     .foregroundColor(.black)
             }
-                
-            }
             
-        
         }
         
+        
+    }
+    
     
     func getChosenClient(){
         
@@ -148,200 +148,162 @@ struct NewClientView: View {
         
     }
     
- 
+    
 }
-            
-    struct CreateClientView: View{
-        var db = Firestore.firestore()
+
+struct CreateClientView: View{
+    var db = Firestore.firestore()
+    
+    @State var clientName = ""
+    @State var clientAddress = ""
+    @State var clientYourRefName = ""
+    @State  var organizationNumber = ""
+    @State var vatNumber = ""
+    
+    var body: some View{
         
-        @State var clientName = ""
-        @State var clientAddress = ""
-        @State var clientYourRefName = ""
-        @State  var organizationNumber = ""
-        @State var vatNumber = ""
-        
-        var body: some View{
+        ZStack(){
             
-            ZStack(){
-              
+            
+            Image("ClientPhoto")
+                .resizable()
+                .scaledToFill()
+            
+            
+            
+            
+            
+            
+            
+            VStack{
                 
-                        Image("ClientPhoto")
-                            .resizable()
-                            .scaledToFill()
-                            
-                         
-                    
-                    
-                 
+                TextField("kund ",text: $clientName)
+                    .padding()
+                    .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .foregroundColor(.black)
+                    .bold()
+                    .font(.headline)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 
-                    
-                VStack{
-                    
-                    TextField("kund ",text: $clientName)
+                
+                
+                TextField("Adress", text: $clientAddress)
+                    .padding()
+                    .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .foregroundColor(.black)
+                    .bold()
+                    .font(.headline)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                TextField("Referens", text: $clientYourRefName)
+                    .padding()
+                    .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .foregroundColor(.black)
+                    .bold()
+                    .font(.headline)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                TextField("Orgnummer", text: $organizationNumber)
+                    .padding()
+                    .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .foregroundColor(.yellow)
+                    .bold()
+                    .font(.headline)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                TextField("Momsnummer", text: $vatNumber)
+                    .padding()
+                    .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    .foregroundColor(.black)
+                    .bold()
+                    .font(.headline)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                
+                
+                Button(action:{
+                    addNewClient()
+                    makeEmptyString()
+                },
+                       label: {Text("Spara Kund".uppercased())
                         .padding()
-                        .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .foregroundColor(.black)
-                        .bold()
+                        .frame(width:200  ,height: 55)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10,style: .continuous)
+                                .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .font(.headline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                    
-                    
-                    
-                    TextField("Adress", text: $clientAddress)
-                        .padding()
-                        .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .foregroundColor(.black)
-                        .bold()
-                        .font(.headline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                    TextField("Referens", text: $clientYourRefName)
-                        .padding()
-                        .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .foregroundColor(.black)
-                        .bold()
-                        .font(.headline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                    TextField("Orgnummer", text: $organizationNumber)
-                        .padding()
-                        .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .foregroundColor(.yellow)
-                        .bold()
-                        .font(.headline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                    TextField("Momsnummer", text: $vatNumber)
-                        .padding()
-                        .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                        .foregroundColor(.black)
-                        .bold()
-                        .font(.headline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                    
-                    
-                    Button(action:{
-                        addNewClient()
-                        /*   clientName = ""
-                         vatNumber = ""
-                         clientAddress = ""
-                         clientYourRefName = ""
-                         organizationNumber = ""*/
-                        makeEmptyString()
-                    },
-                           label: {Text("Spara Kund".uppercased())
-                            .padding()
-                            .frame(width:200  ,height: 55)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10,style: .continuous)
-                                    .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
-                            .font(.headline)
-                    })
-                    
-                    
-                }
+                })
+                
+                
             }
-            .ignoresSafeArea()
-            
         }
-        
-        
-        func addNewClient() {
-            
-            let client = Client( name: clientName, organizationNumber: organizationNumber, CompanyAdres: clientAddress, vat: vatNumber, referens: clientYourRefName)
-            
-            
-            
-            do{
-                _ = try    db.collection("clients").addDocument(from: client)
-                
-            }catch {
-                print("Error saving to DB")
-            }
-            
-        }
-        func makeEmptyString() {
-            clientName = ""
-            vatNumber = ""
-            clientAddress = ""
-            clientYourRefName = ""
-            organizationNumber = ""
-            
-        }
+        .ignoresSafeArea()
         
     }
     
     
-    struct NewCientView_Previews: PreviewProvider {
-        static var previews: some View {
-            NewClientView( client: Client())
+    func addNewClient() {
+        
+        let client = Client( name: clientName, organizationNumber: organizationNumber, CompanyAdres: clientAddress, vat: vatNumber, referens: clientYourRefName)
+        
+        
+        
+        do{
+            _ = try    db.collection("clients").addDocument(from: client)
+            
+        }catch {
+            print("Error saving to DB")
         }
+        
+    }
+    func makeEmptyString() {
+        clientName = ""
+        vatNumber = ""
+        clientAddress = ""
+        clientYourRefName = ""
+        organizationNumber = ""
+        
     }
     
-    
-    
-    /*
-     Color.black
-     .ignoresSafeArea()
-     .frame(width: 80, height: 1000)
-     .rotationEffect(.degrees(690))
-     .offset(y:2)
-     .padding()
-     
-     .background(
-     
-     RoundedRectangle(cornerRadius: 30,style: .continuous)
-     
-     .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)))*/
-    
-    
-    
-    
-    //.navigationBarItems(trailing:
-    //                      NavigationLink(destination: CreateClientView()){
-    //})
-    
-    /*   Circle()
-     .fill(LinearGradient(gradient: Gradient(colors: [.black, .orange,.white]), startPoint: .leading, endPoint: .trailing)) as! Circle
-     Text("NY KUND")
-     .foregroundColor(.white)
-     .font(.system(size: 25))
-     .bold()
-     
-     
-     .frame(width: 150, height: 150)
-     
-     
-     })*/
+}
 
 
-    
-        struct circlenavigationCrateClient: View{
-            var color: Color
-            var navigationText: String
-            var body: some View{
-                ZStack {
-                    Circle()
-                        .frame(width: 50, height: 60)
-                        .foregroundColor(color)
-                        .padding(40)
-                        .ignoresSafeArea()
-                    
-                    Text("NY KUND")
-                        .foregroundColor(.white)
-                        .font(.system(size: 10,weight: .bold))
-                        .bold()
-                }
-                
-                
-                
-                
-            }
+struct NewCientView_Previews: PreviewProvider {
+    static var previews: some View {
+        NewClientView( client: Client())
+    }
+}
+
+
+
+
+
+
+struct circlenavigationCrateClient: View{
+    var color: Color
+    var navigationText: String
+    var body: some View{
+        ZStack {
+            Circle()
+                .frame(width: 50, height: 60)
+                .foregroundColor(color)
+                .padding(40)
+                .ignoresSafeArea()
+            
+            Text("NY KUND")
+                .foregroundColor(.white)
+                .font(.system(size: 10,weight: .bold))
+                .bold()
         }
+        
+        
+        
+        
+    }
+}

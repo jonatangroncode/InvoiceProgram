@@ -9,14 +9,14 @@ import SwiftUI
 import Firebase
 
 class LoginUser: ObservableObject {
- @State var user: User?
+    @State var user: User?
     let auth = Auth.auth()
     @Published var signedIn = false
     var isSignedIn: Bool {
         return auth.currentUser != nil
     }
     func signIn(email: String, password: String){
-      
+        
         auth.signIn(withEmail: email, password: password){[weak self]result, error in
             guard result != nil, error == nil else{
                 return
@@ -39,7 +39,7 @@ class LoginUser: ObservableObject {
                 
                 
             }
-     
+            
         }
         
     } // signout func
