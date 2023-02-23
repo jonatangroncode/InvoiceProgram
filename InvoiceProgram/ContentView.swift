@@ -39,7 +39,7 @@ struct ContentView: View {
         
         NavigationView{
             
-            VStack{
+            ZStack{
                 if viewLoginUser.signedIn {
                     
                     Text("").onAppear{
@@ -71,12 +71,21 @@ struct ContentView: View {
                                     Text("FAKTUROR")
                                     
                                 }
+                            SalaryView()
+                                .tabItem{
+                                    Image(systemName: "dollarsign.square")
+                                        .resizable()
+
+                                }
                                
                            }
                         .accentColor(.orange)
-                        .offset(y:68)
+                        .offset(y:20)
+                        .ignoresSafeArea()
                         
+                       
                         }
+                        
                         
                         
                      Button(action: {
@@ -87,10 +96,12 @@ struct ContentView: View {
                             .font(.system(size:12))
                         Image(systemName: "figure.walk.departure")
                                             .resizable()
-                                            .frame(width: 15, height: 15)
+                                            .frame(width: 10, height: 10)
+                                            
                     })
-               
-
+                     
+                     Spacer()
+                     
                     
                     
                     

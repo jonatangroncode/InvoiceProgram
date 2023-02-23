@@ -117,7 +117,6 @@
 				BF9596A72994ABFB00E48802 /* ListView.swift */,
 				BF0E1292298927D9009245A5 /* Client.swift */,
 				BF0E129429892A9C009245A5 /* User.swift */,
-				BF0E12902989218C009245A5 /* Company.swift */,
 				BF2026D9297824FA0019A12B /* InvoiceProgram */,
 				BF2026EA297825000019A12B /* InvoiceProgramTests */,
 				BF2026F4297825000019A12B /* InvoiceProgramUITests */,
@@ -138,6 +137,7 @@
 		BF2026D9297824FA0019A12B /* InvoiceProgram */ = {
 			isa = PBXGroup;
 			children = (
+				BF0E12902989218C009245A5 /* Company.swift */,
 				BF2026DA297824FA0019A12B /* InvoiceProgramApp.swift */,
 				BF2026DC297824FA0019A12B /* ContentView.swift */,
 				BFA23FAF299D284D00110905 /* NewClientView.swift */,

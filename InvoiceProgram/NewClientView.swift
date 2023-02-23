@@ -158,12 +158,16 @@ struct NewClientView: View {
         var body: some View{
             
             ZStack(){
-                Color.white
-                    .ignoresSafeArea()
+              
+                
+                        Image("ClientPhoto")
+                            .resizable()
+                            .scaledToFill()
+                            
+                         
                     
                     
-                    .offset(y:2)
-                    .padding()
+                 
                 
                     
                 VStack{

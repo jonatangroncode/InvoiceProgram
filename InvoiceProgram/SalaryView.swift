@@ -17,13 +17,21 @@ struct SalaryView: View {
                     Image("salaray")
                         .resizable()
                         .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
+                        
+                        .ignoresSafeArea()
                     // Lägg till dina andra vyer ovanpå bakgrundsbilden här.
             Text("Min lön" )
-                .foregroundColor(.orange)
+                .foregroundColor(.white)
                 .font(.system(size: 40))
+                .bold()
+                
                 }
-            }    }
+       
+        .ignoresSafeArea()
+        
+            }
+        
+}
 
 
 struct SalaryView_Previews: PreviewProvider {
