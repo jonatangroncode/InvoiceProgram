@@ -474,26 +474,43 @@ struct StartListView: View {
     @State var user: User
     
     var body: some View {
-        VStack {
-            NavigationLink(destination: NewInvoice(user: user)){
-              HStack {
-                Text("Skapa en faktura")
-                Image(systemName: "plus")
-                  .foregroundColor(.white)
-              }
-             
-              .background(Color.black)
-              .foregroundColor(.white)
-            }
-          
-            
+        VStack{
+         
+           
+                NavigationLink(destination: NewInvoice(user: user)){
+                   
+                        Text("Skapa en faktura")
+                            .foregroundColor(.white)
+                            .font(.system(size: 7))
+                            .frame(width: 40 , height: 35)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 30))
+                    }
+                   .offset(x:30 ,y: 40)
+                   .ignoresSafeArea()
+              
+                
                 List(invoices) { invoice in
                     NavigationLink(destination: InvoiceDetails(invoice: invoice)) {
                         Text("Fakturanummer \(invoice.invoiceNummer)")
+                            .foregroundColor(.white)
+                            
+                        Image("Frame1")
+                              .resizable()
+                              .scaledToFill()
+                       
+                            
                     }
+                    .background(
+                        RoundedRectangle(cornerRadius: 30,style: .continuous)
+                        .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                        .padding()
+                    
+                        
                 }
             
-        }
+
+            }
         
         .onAppear {
             listenToFirestore()

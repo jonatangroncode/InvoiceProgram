@@ -23,7 +23,7 @@ struct NewClientView: View {
     var body: some View {
         VStack{
             
-            
+           
             /*.ignoresSafeArea()
              .frame(width: 80, height: 500)
              .rotationEffect(.degrees(690))
@@ -32,27 +32,32 @@ struct NewClientView: View {
             
             NavigationView{
                 
-                
-                
+              
                 List{
                     ForEach(clients) { client in
                         NavigationLink( destination: clientDetailsView(client: client)){
                             Text(client.name ?? "")
                             
-                            
-                            
-                        }
+                            Image("clintsuite")
+                                .resizable()
+                                .scaledToFill()
+                                
                         
-                        .padding(20)
-                        .ignoresSafeArea()
+                        }
                         .background(
                             
                             RoundedRectangle(cornerRadius: 30,style: .continuous)
                             
-                                .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                                .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                        
+                     
+                            
                     }
                     
                 }
+            
+           
+
                 .navigationBarItems(trailing: NavigationLink(destination: CreateClientView()){
                     // circlenavigationCrateClient(color: .black, navigationText: "Ny kund")
                     Image(systemName: "person.3.sequence.fill")
@@ -175,7 +180,7 @@ struct NewClientView: View {
                     TextField("kund ",text: $clientName)
                         .padding()
                         .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.3), .red.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .foregroundColor(.black)
                         .bold()
                         .font(.headline)
@@ -187,7 +192,7 @@ struct NewClientView: View {
                     TextField("Adress", text: $clientAddress)
                         .padding()
                         .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.3), .red.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .foregroundColor(.black)
                         .bold()
                         .font(.headline)
@@ -196,7 +201,7 @@ struct NewClientView: View {
                     TextField("Referens", text: $clientYourRefName)
                         .padding()
                         .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.3), .red.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .foregroundColor(.black)
                         .bold()
                         .font(.headline)
@@ -205,7 +210,7 @@ struct NewClientView: View {
                     TextField("Orgnummer", text: $organizationNumber)
                         .padding()
                         .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.3), .red.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .foregroundColor(.yellow)
                         .bold()
                         .font(.headline)
@@ -214,7 +219,7 @@ struct NewClientView: View {
                     TextField("Momsnummer", text: $vatNumber)
                         .padding()
                         .background(  RoundedRectangle(cornerRadius: 10,style: .continuous)
-                            .foregroundStyle(.linearGradient(colors: [.orange.opacity(0.3), .red.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                            .foregroundStyle(.linearGradient(colors: [.white.opacity(0.3), .black.opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing)))
                         .foregroundColor(.black)
                         .bold()
                         .font(.headline)
@@ -233,10 +238,10 @@ struct NewClientView: View {
                     },
                            label: {Text("Spara Kund".uppercased())
                             .padding()
-                            .frame(maxWidth: .infinity)
+                            .frame(width:200  ,height: 55)
                             .background(
                                 RoundedRectangle(cornerRadius: 10,style: .continuous)
-                                    .foregroundStyle(.linearGradient(colors: [.orange, .red], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                                    .foregroundStyle(.linearGradient(colors: [.black, .white], startPoint: .topLeading, endPoint: .bottomTrailing)))
                             .font(.headline)
                     })
                     
