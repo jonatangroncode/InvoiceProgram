@@ -100,9 +100,9 @@ struct ContentView: View {
                                             
                     })
                      
-                     Spacer()
-                     
+                     .offset(x: -45 ,y: -330)
                     
+                     .ignoresSafeArea()
                     
                     
                 } else {

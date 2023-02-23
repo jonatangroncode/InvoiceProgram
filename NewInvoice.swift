@@ -33,19 +33,28 @@ struct NewInvoice: View {
                 TextField("Kund", text: $clientName)
                     .font(.largeTitle)
                     .foregroundColor(.black)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 TextField("Faktura belopp", text: $invoiceAmount)
                     .font(.largeTitle)
                     .foregroundColor(.black)
-                
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 TextField("UPPDRAG", text: $jobAssignment)
                     .font(.largeTitle)
                     .foregroundColor(.black)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 TextField("ANTAL TIM", text: $workedHour)
                     .font(.largeTitle)
                     .foregroundColor(.black)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 TextField("REFERENS", text: $reference)
                     .font(.largeTitle)
                     .foregroundColor(.black)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
             }
         }
         
@@ -57,8 +66,9 @@ struct NewInvoice: View {
            
             if(getChosenClient()){
                 addNewInvoice(invoiceAmount: invoiceAmountDouble ?? 0.0,
-                              cli: Client( name: client?.name, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
+                              cli:  Client( name: client?.name, organizationNumber: client?.organizationNumber, CompanyAdres: client?.CompanyAdres, vat: client?.vat, personalId: client?.personalId, referens: client?.referens),
                               user:User(email: user.email),
+                              jobAssigment: jobAssignment, workHour: workedHour,
                                          lastPayDate: lastInvoicePayDate)
             }else {
                showAlert = true
@@ -82,7 +92,7 @@ struct NewInvoice: View {
         }
         }
         
-    func addNewInvoice(invoiceAmount: Double ,cli : Client,user : User, lastPayDate : Date) {
+    func addNewInvoice(invoiceAmount: Double ,cli : Client,user : User,jobAssigment : String, workHour: String, lastPayDate : Date) {
             
             var date: String {
                 let dateFormatter = DateFormatter()
@@ -90,7 +100,7 @@ struct NewInvoice: View {
                 return dateFormatter.string(from: Date())}
 
         getLastInvoiceNumber { newInvoiceNumber in
-            let invoice = Invoice(client: cli,user: user ,invoiceNummer: newInvoiceNumber,date: date, lastPayDate: lastPayDate, amount: invoiceAmount)
+            let invoice = Invoice(client: cli,user: user ,invoiceNummer: newInvoiceNumber,invoiceJobAssignment: jobAssigment , invoiceWorkedHour: workHour ,date: date, lastPayDate: lastPayDate, amount: invoiceAmount)
             
             do{
                 _ = try    db.collection("invoices").addDocument(from: invoice)

@@ -81,19 +81,10 @@ struct InvoiceDetails: View  {
                     .bold()
                     .padding()
                     .font(.system(size: 15 ,weight: .bold))
-                Rectangle()
-                    .frame(width: 350, height: 1)
-                    .foregroundColor(.white)
-                    .padding()
-                Rectangle()
-                    .frame(width: 350, height: 1)
-                    .foregroundColor(.white)
-                    .padding()
                 
-                Rectangle()
-                    .frame(width: 350, height: 1)
+                
+                Text("Uppdrag : " + "\(invoice.invoiceJobAssignment)")
                     .foregroundColor(.white)
-                    .padding()
                 
                     
             }
@@ -151,9 +142,5 @@ func convertDateToString(_ date: Date) -> String {
  Text(" Orgnr :" + "\(invoice.client?.organizationNumber ?? "")")
  */
 
-struct InvoiceDetails_Previews: PreviewProvider {
-    static var previews: some View {
-        InvoiceDetails(invoice: Invoice(user: User(email: "email", invoices: [Invoice]() ), date: "", lastPayDate: Date(), amount: 0.0))
-    }
-}
+
 

@@ -18,6 +18,8 @@ struct Invoice : Codable, Identifiable  {
     var invoiceNummer : Int = 0
     var CompanyAdres : String?
     var vat : Int = 0
+    var invoiceJobAssignment : String
+    var invoiceWorkedHour : String
     var date : String
     var lastPayDate : Date
     var amount:  Double
