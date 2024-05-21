@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5A9200DD2BFC18D900781549 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */; };
 		5A9200DF2BFC26F300781549 /* SignInView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9200DE2BFC26F300781549 /* SignInView..swift */; };
+		5A9200E12BFC2BDB00781549 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9200E02BFC2BDB00781549 /* SignUpView.swift */; };
 		BF0E12912989218C009245A5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E12902989218C009245A5 /* Company.swift */; };
 		BF0E1293298927D9009245A5 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E1292298927D9009245A5 /* Client.swift */; };
 		BF0E129529892A9C009245A5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E129429892A9C009245A5 /* User.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A9200DE2BFC26F300781549 /* SignInView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView..swift; sourceTree = "<group>"; };
+		5A9200E02BFC2BDB00781549 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		BF0E12902989218C009245A5 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		BF0E1292298927D9009245A5 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		BF0E129429892A9C009245A5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				BF9596A3299449F300E48802 /* SalaryView.swift */,
 				BF97E02629A1670B00A779DD /* PdfView.swift */,
 				5A9200DE2BFC26F300781549 /* SignInView..swift */,
+				5A9200E02BFC2BDB00781549 /* SignUpView.swift */,
 				BF2026DE297825000019A12B /* Assets.xcassets */,
 				5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */,
 				BF2026E0297825000019A12B /* Preview Content */,
@@ -324,6 +327,7 @@
 				BF0E129529892A9C009245A5 /* User.swift in Sources */,
 				BF9596A4299449F300E48802 /* SalaryView.swift in Sources */,
 				BF2026DB297824FA0019A12B /* InvoiceProgramApp.swift in Sources */,
+				5A9200E12BFC2BDB00781549 /* SignUpView.swift in Sources */,
 				BF97E02729A1670B00A779DD /* PdfView.swift in Sources */,
 				BF0E1293298927D9009245A5 /* Client.swift in Sources */,
 				BF0E12912989218C009245A5 /* Company.swift in Sources */,

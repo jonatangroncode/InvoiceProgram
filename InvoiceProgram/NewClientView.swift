@@ -24,6 +24,11 @@ struct NewClientView: View {
         VStack{
             
             
+            /*.ignoresSafeArea()
+             .frame(width: 80, height: 500)
+             .rotationEffect(.degrees(690))
+             .offset(y:2)
+             */
             
             NavigationView{
                 
