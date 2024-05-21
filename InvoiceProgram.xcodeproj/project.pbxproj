@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A9200DD2BFC18D900781549 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */; };
 		BF0E12912989218C009245A5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E12902989218C009245A5 /* Company.swift */; };
 		BF0E1293298927D9009245A5 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E1292298927D9009245A5 /* Client.swift */; };
 		BF0E129529892A9C009245A5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0E129429892A9C009245A5 /* User.swift */; };
@@ -18,7 +19,6 @@
 		BF2026F6297825000019A12B /* InvoiceProgramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2026F5297825000019A12B /* InvoiceProgramUITests.swift */; };
 		BF2026F8297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2026F7297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift */; };
 		BF20272229782A140019A12B /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20272129782A140019A12B /* Invoice.swift */; };
-		BF20272A29783A300019A12B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF20272929783A300019A12B /* GoogleService-Info.plist */; };
 		BF9596A4299449F300E48802 /* SalaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A3299449F300E48802 /* SalaryView.swift */; };
 		BF9596A62994A2E900E48802 /* NewInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A52994A2E900E48802 /* NewInvoice.swift */; };
 		BF9596A82994ABFB00E48802 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9596A72994ABFB00E48802 /* ListView.swift */; };
@@ -52,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BF0E12902989218C009245A5 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		BF0E1292298927D9009245A5 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		BF0E129429892A9C009245A5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		BF2026F5297825000019A12B /* InvoiceProgramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProgramUITests.swift; sourceTree = "<group>"; };
 		BF2026F7297825000019A12B /* InvoiceProgramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProgramUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BF20272129782A140019A12B /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
-		BF20272929783A300019A12B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BF9596A3299449F300E48802 /* SalaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalaryView.swift; sourceTree = "<group>"; };
 		BF9596A52994A2E900E48802 /* NewInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInvoice.swift; sourceTree = "<group>"; };
 		BF9596A72994ABFB00E48802 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 				BF9596A92995031300E48802 /* InvoiceDetails.swift */,
 				BF9596A3299449F300E48802 /* SalaryView.swift */,
 				BF2026DE297825000019A12B /* Assets.xcassets */,
-				BF20272929783A300019A12B /* GoogleService-Info.plist */,
+				5A9200DC2BFC18D900781549 /* GoogleService-Info.plist */,
 				BF2026E0297825000019A12B /* Preview Content */,
 				BF97E02629A1670B00A779DD /* PdfView.swift */,
 			);
@@ -292,7 +292,7 @@
 			files = (
 				BF2026E2297825000019A12B /* Preview Assets.xcassets in Resources */,
 				BF2026DF297825000019A12B /* Assets.xcassets in Resources */,
-				BF20272A29783A300019A12B /* GoogleService-Info.plist in Resources */,
+				5A9200DD2BFC18D900781549 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,7 +660,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				minimumVersion = 10.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

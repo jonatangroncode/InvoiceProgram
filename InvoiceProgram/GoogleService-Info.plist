@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>783217067976-8d9ccp3aprpv3vdlg3dhuu9oh3egp6ef.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.783217067976-8d9ccp3aprpv3vdlg3dhuu9oh3egp6ef</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCGHquO-ay19Egra0FvJTz7TP8-8L0LJt4</string>
+	<string>AIzaSyAz8DZ83dexRfsgi6kITOwY9e9Nu25uOXg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>783217067976</string>
+	<string>538135852941</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.InvoiceProgram</string>
 	<key>PROJECT_ID</key>
-	<string>fakturera-utancompany</string>
+	<string>invoice-11b13</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fakturera-utancompany.appspot.com</string>
+	<string>invoice-11b13.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:783217067976:ios:e3621b701f2197d6b7a2fd</string>
+	<string>1:538135852941:ios:bcc1d57eabf77becffefc4</string>
 </dict>
 </plist>

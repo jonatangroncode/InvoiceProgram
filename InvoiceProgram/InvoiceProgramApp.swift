@@ -11,7 +11,8 @@ import FirebaseAuth
 
 @main
 struct InvoiceProgramApp: App{
-        
+    
+
     @UIApplicationDelegateAdaptor(AppDelagate.self) var appDelegate 
   /*  init(){
        

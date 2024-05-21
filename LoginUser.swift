@@ -15,16 +15,16 @@ class LoginUser: ObservableObject {
     var isSignedIn: Bool {
         return auth.currentUser != nil
     }
-    func signIn(email: String, password: String){
-        
-        auth.signIn(withEmail: email, password: password){[weak self]result, error in
-            guard result != nil, error == nil else{
+    func signIn(email: String, password: String) {
+        print("Trying to sign in with email:", email)
+        auth.signIn(withEmail: email, password: password) { [weak self] result, error in
+            guard result != nil, error == nil else {
+                print("Error signing in:", error?.localizedDescription ?? "Unknown error")
                 return
-            }// Success
+            }
+            print("Successfully signed in!")
             DispatchQueue.main.async {
-                
                 self?.signedIn = true
-                
             }
         }
     }

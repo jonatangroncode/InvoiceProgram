@@ -18,9 +18,14 @@ import PDFKit
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import Foundation
+
 
 var email = "" 
 struct ContentView: View {
+    
     
     @State private var CreateAnInvoiceitem = "contextualmenu.and.cursorarrow.fill"
     //var db = Firestore.firestore()
@@ -33,6 +38,7 @@ struct ContentView: View {
     var db = Firestore.firestore()
     //@State var dateString = ""
     @State var users =  [User]()
+    
     
     
     var body: some View {
@@ -120,38 +126,32 @@ struct ContentView: View {
         }
         
     }
-    
-    func listenToFirestore()  {
-        
+    func listenToFirestore() {
         db.collection("users").addSnapshotListener { snapshot, err in
-            guard let snapshot = snapshot else {return}
-            
             if let err = err {
-                print("Error getting document \(err)")
-            } else {
-                users.removeAll()
-                for document in snapshot.documents {
-                    
-                    print(document)
-                    let result = Result {
-                        try document.data(as: User.self)
-                        
-                    }
-                    switch result  {
-                    case .success(let user)  :
-                        users.append(user)
-                        print(user)
-                        print("added to  list")
-                    case .failure(let error) :
-                        print("Error decoding item: \(error)")
-                    }
-                    
+                print("Error getting documents: \(err)")
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("Error: snapshot is nil")
+                return
+            }
+
+            users.removeAll()
+            for document in snapshot.documents {
+                do {
+                    let user = try document.data(as: User.self)
+                    users.append(user)
+                    print(user)
+                    print("added to list")
+                } catch {
+                    print("Error decoding item: \(error)")
                 }
-                
             }
         }
-        
     }
+
     func getCurrentUser(){
         print("i get getcurrentuser")
         print(self.user?.email ?? "null")
@@ -168,6 +168,7 @@ struct ContentView: View {
     }
     
 }
+
 
 struct SignInView: View {
     //  var db = Firestore.firestore()
@@ -238,23 +239,19 @@ struct SignInView: View {
                     Rectangle()
                         .frame(width: 350, height: 1)
                         .foregroundColor(.white)
-                    Button { //register()
+                    Button {
                         email = emailText
                         guard !email.isEmpty, !password.isEmpty else {
                             return
                         }
-                        viewLoginUser.signIn(email:email, password: password)
-                        
-                    }label: {
+                        viewLoginUser.signIn(email: email, password: password)
+                        print("Trying to sign in...")
+                    } label: {
                         Text("logga in")
                             .bold()
                             .frame(width: 200, height: 40)
-                        
-                            .background(
-                                RoundedRectangle(cornerRadius: 10,style: .continuous)
-                                    .fill(.linearGradient(colors: [.blue , .black], startPoint: .top, endPoint: .bottomTrailing))
-                                
-                            )
+                            .background(RoundedRectangle(cornerRadius: 10,style: .continuous)
+                                .fill(.linearGradient(colors: [.blue , .black], startPoint: .top, endPoint: .bottomTrailing)))
                     }
                     .padding()
                     
