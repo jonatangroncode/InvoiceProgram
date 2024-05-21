@@ -60,7 +60,6 @@ struct NewInvoice: View {
         
         
         
-        //  TextField("Belopp", text: $createNewInvoice)
         Button{
             let invoiceAmountDouble = Double(invoiceAmount)
             
@@ -215,10 +214,3 @@ struct NewInvoice: View {
 }
 
 
-
-/*struct NewInvoice_Previews: PreviewProvider {
- static var previews: some View {
- NewInvoice()
- }
- 
- }*/

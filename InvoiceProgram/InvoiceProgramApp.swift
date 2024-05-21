@@ -14,16 +14,7 @@ struct InvoiceProgramApp: App{
     
 
     @UIApplicationDelegateAdaptor(AppDelagate.self) var appDelegate 
-  /*  init(){
-       
-        FirebaseApp.configure()
-        //Auth.auth().createUser(withEmail: Email, password: "" ) { authResult, error in
-          //if let
-        }
 
-    //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-      
-  //  }*/
    
     var body: some Scene {
         WindowGroup {

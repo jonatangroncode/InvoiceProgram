@@ -6,13 +6,8 @@
 //
 
 import Foundation
-//
-//  Created by Ernesto Carocca on 2023-01-18.
-//
-
-
-
 import FirebaseFirestoreSwift
+
 struct Company : Codable  {
     
     var name : String
@@ -25,6 +20,6 @@ struct Company : Codable  {
     
 
     
-//}
+
 
 

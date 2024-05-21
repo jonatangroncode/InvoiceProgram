@@ -72,56 +72,7 @@ private func createInvoicePDF() -> PDFDocument {
 }
 
 
-/*private func createInvoicePDF() -> PDFDocument {
-    // create the PDF document and add a page with the invoice details
-    let pdfDocument = PDFDocument()
-    let page = PDFPage()
-    let pageBounds = page.bounds(for: .cropBox)
-    
-    // add text to the PDF page
-    let text = "Hello, world! This is some red text."
-    
-    let textFont = UIFont.systemFont(ofSize: 14)
-    let textAttributes: [NSAttributedString.Key: Any] = [.font: textFont, .foregroundColor: UIColor.red]
-    
-    let attributedText = NSAttributedString(string: text, attributes: textAttributes)
-    let textRect = CGRect(x: pageBounds.midX, y: pageBounds.midY, width: 250, height: 50)
-    attributedText.draw(in: textRect)
-    
-    // add the page to the PDF document
-    pdfDocument.insert(page, at: pdfDocument.pageCount)
-    
-    return pdfDocument
-}*/
 
-/*
-    private func createInvoicePDF() -> PDFDocument {
-        
-        // create the PDF document and add a page with the invoice details
-        let pdfDocument = PDFDocument()
-        let page = PDFPage()
-        let pageBounds = page.bounds(for: .cropBox)
-        
-        // add text to the PDF page
-        let text = "Hello, world hoppas det är bra och att jag kan se texten!"
-        
-        let textFont = UIFont.systemFont(ofSize: 25)
-        let textAttributes: [NSAttributedString.Key: Any] = [.font: textFont, .foregroundColor: UIColor.black]
-        
-        //let textAttributes: [NSAttributedString.Key: Any] = [.font: textFont]
-        let attributedText = NSAttributedString(string: text, attributes:textAttributes)
-        
-        let textRect = CGRect(x: pageBounds.midX, y: pageBounds.midY, width: 55, height: 55).insetBy(dx: -72, dy: -72)
-        attributedText.draw(in: textRect)
-        
-        // add the page to the PDF document
-        pdfDocument.insert(page, at: pdfDocument.pageCount)
-        
-        
-        return pdfDocument
-    }
-}
-*/
 
 struct ContentView_Previews: PreviewProvider {
    static var previews: some View {

@@ -58,8 +58,7 @@ struct InvoiceDetails: View  {
             }
             
             
-            // .cornerRadius(30)
-            //.background(Color.green)
+    
             .foregroundColor(.white)
             .bold()
             .padding()
@@ -128,19 +127,6 @@ func convertDateToString(_ date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
-
-
-/*
- Text(invoice.name )
- Text("\(invoice.total) " + "kr")
- Text(" fakturanamn : " + invoice.name)
- Text(" faktura belopp ex moms : \(invoice.amount) " + "kr")
- Text("faktura belopp ink moms: \(invoice.total) " + "kr")
- Text(" Kund: " + "\(invoice.client?.name ?? "")")
- Text(" Referens:" +  "\(invoice.client?.referens ?? "")")
- Text(" Adress:" + "\(invoice.client?.CompanyAdres ?? "")")
- Text(" Orgnr :" + "\(invoice.client?.organizationNumber ?? "")")
- */
 
 
 
